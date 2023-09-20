@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "957029497468",
+    "project_id": "projectyia-555a0",
+    "storage_bucket": "projectyia-555a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957029497468:android:e3ed9115d29e4f543d67f9",
+        "android_client_info": {
+          "package_name": "com.example.tenantyia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoCWoO8pNa3R4p6eaXy-sBqSfaypE7Q6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
