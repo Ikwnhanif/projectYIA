@@ -1,6 +1,5 @@
 # tenantyia
-
-A new Flutter project.
+'Aplikasi ini adalah sebuah platform terhubung dengan realtime database menggunakan firebase untuk mengelola data perusahaan yang berada di Yogyakarta International Airport (YIA). Anda dapat menggunakan aplikasi ini untuk memasukkan, mengedit, dan melihat data perusahaan dengan mudah.',
 
 ## Getting Started
 
