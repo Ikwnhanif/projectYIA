@@ -211,6 +211,11 @@ class _RegisterPageState extends State<RegisterPage> {
     Akun akun = Akun(Username.text, Password.text);
     try {
       await UserDatabaseHelper.createUser(akun);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) {
+          return const LoginPage();
+        }),
+      );
       final snackbar = SnackBar(
         content: Text('Berhasil Membuat Akun'),
         backgroundColor: Colors.greenAccent,

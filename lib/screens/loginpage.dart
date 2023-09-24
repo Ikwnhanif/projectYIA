@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
           context, MaterialPageRoute(builder: (context) => MyHomePage()));
     } catch (e) {
       final snackbar = SnackBar(
-        content: Text('Gagal login'),
+        content: Text('Username atau Password Salah'),
         backgroundColor: Colors.redAccent,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackbar);

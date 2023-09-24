@@ -35,4 +35,11 @@ class Database {
       print("Error: $e");
     }
   }
+
+  static Stream<QuerySnapshot> searchData(String query) {
+    return tbltenant
+        .where('NamaPT', isGreaterThanOrEqualTo: query)
+        .where('NamaPT', isLessThan: query + '\uf8ff')
+        .snapshots();
+  }
 }

@@ -30,8 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.lightBlue, // Warna latar belakang
-        selectedItemColor: Colors.white, // Warna item yang dipilih
+        backgroundColor: Colors.white, // Warna latar belakang
+        selectedItemColor: Colors.blueAccent, // Warna item yang dipilih
         unselectedItemColor: Colors.black54, // Warna item yang tidak dipilih
         iconSize: 30, // Ukuran ikon
         selectedLabelStyle:
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
+            icon: Icon(Icons.list),
             label: 'List Tenant',
           ),
           BottomNavigationBarItem(
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Add Tenant',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
+            icon: Icon(Icons.info_sharp),
             label: 'Information',
           ),
         ],

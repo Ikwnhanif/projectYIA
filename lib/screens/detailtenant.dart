@@ -19,7 +19,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     super.initState();
     _stream = FirebaseFirestore.instance
-        .collection('dataTenant') // Ganti dengan nama koleksi Firestore Anda
+        .collection('dataTenant') //koleksi Firestore Anda
         .doc(widget.documentId) // Gunakan documentId yang diterima dari widget
         .snapshots();
   }
@@ -51,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
             );
           }
 
-          // Di sini Anda dapat mengakses data dari snapshot.data
+          // mengakses data dari snapshot.data
           String lvnamaPT = snapshot.data!['NamaPT'];
           String lvGerai = snapshot.data!['Gerai'];
           String lvLokasi = snapshot.data!['Lokasi'];
@@ -61,15 +61,15 @@ class _DetailPageState extends State<DetailPage> {
           String lvKeterangan = snapshot.data!['Keterangan'];
           String lvJenis = snapshot.data!['Jenis'];
 
-          // Tampilkan data di UI Anda sesuai kebutuhan
           return ListView(
             children: [
+              SizedBox(height: 16.0),
               Center(
                 child: Container(
                   width: 150.0,
                   height: 150.0,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    shape: BoxShape.rectangle,
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image:
@@ -100,13 +100,12 @@ class _DetailPageState extends State<DetailPage> {
               ),
               ListTile(
                 title: Text('Luas'),
-                subtitle: Text(lvLuas),
+                subtitle: Text(lvLuas + " m²"),
               ),
               ListTile(
                 title: Text('Keterangan'),
                 subtitle: Text(lvKeterangan),
               ),
-              // ... (lanjutkan menampilkan data lainnya)
             ],
           );
         },
@@ -124,7 +123,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
             );
           },
-          child: Text('Edit'),
+          child: Text('Update Data'),
         ),
       ),
     );

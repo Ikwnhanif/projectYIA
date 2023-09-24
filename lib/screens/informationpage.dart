@@ -71,7 +71,7 @@ class InformationPage extends StatelessWidget {
               Image.network(
                 'https://ap1.co.id/contents/logo/large/ori-logo-ap-corp.png',
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 30),
 
               // Deskripsi Aplikasi
               Text(
@@ -82,12 +82,15 @@ class InformationPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              Text(
-                'Aplikasi ini adalah sebuah platform terhubung dengan realtime database menggunakan firebase untuk mengelola data perusahaan yang berada di Yogyakarta International Airport (YIA). Anda dapat menggunakan aplikasi ini untuk memasukkan, mengedit, dan melihat data perusahaan dengan mudah.',
-                style: TextStyle(
-                  fontSize: 16,
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Aplikasi ini adalah sebuah platform terhubung dengan realtime database menggunakan firebase untuk mengelola data perusahaan yang berada di Yogyakarta International Airport (YIA). Anda dapat menggunakan aplikasi ini untuk memasukkan, mengedit, dan melihat data perusahaan dengan mudah.',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(height: 32),
 
@@ -100,14 +103,18 @@ class InformationPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              Text(
-                '1. Menambah data perusahaan baru.\n'
-                '2. Mengedit data perusahaan yang sudah ada.\n'
-                '3. Melihat daftar perusahaan .',
-                style: TextStyle(
-                  fontSize: 16,
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  '1. Menambah data perusahaan baru.\n'
+                  '2. Mengedit data perusahaan yang sudah ada.\n'
+                  '3. Melihat dan Mencari daftar perusahaan.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                  ),
+                  textAlign: TextAlign.left,
                 ),
-                textAlign: TextAlign.center,
               ),
             ],
           ),
