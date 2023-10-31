@@ -7,6 +7,8 @@ class dataTenant {
   final String itemKeterangan;
   final String itemKode;
   final String itemGambar;
+  final String itemKondisi;
+  final String itemLastUpdated;
 
   dataTenant(
       {required this.itemNamaPT,
@@ -16,7 +18,9 @@ class dataTenant {
       required this.itemLuas,
       required this.itemKeterangan,
       required this.itemKode,
-      required this.itemGambar});
+      required this.itemGambar,
+      required this.itemKondisi,
+      required this.itemLastUpdated});
 
   Map<String, dynamic> toJson() {
     return {
@@ -28,6 +32,8 @@ class dataTenant {
       "Keterangan": itemKeterangan,
       "Kode": itemKode,
       "Gambar": itemGambar,
+      "Kondisi": itemKondisi,
+      "LastUpdated": itemLastUpdated,
     };
   }
 
@@ -41,6 +47,8 @@ class dataTenant {
       itemKeterangan: json['Keterangan'],
       itemKode: json['Kode'],
       itemGambar: json['Gambar'],
+      itemKondisi: json['Kondisi'],
+      itemLastUpdated: json['LastUpdated'],
     );
   }
 }

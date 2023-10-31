@@ -7,6 +7,7 @@ import 'package:tenantyia/models/datatenant.dart';
 import 'package:tenantyia/screens/listtenant.dart';
 import 'package:tenantyia/screens/menu.dart';
 import 'package:tenantyia/services/dbtenantservices.dart';
+import 'package:intl/intl.dart';
 
 class DataInputForm extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class DataInputForm extends StatefulWidget {
 class _DataInputFormState extends State<DataInputForm> {
   String selectedBusinessType = 'Food And Beverage'; // Default jenis usaha
   String selectedLocation = 'Check In Area'; // Default lokasi
+  String selectedkondisi = 'Sangat Baik'; // Default kondisi
 
   var namaPT = TextEditingController();
   var gerai = TextEditingController();
@@ -23,6 +25,8 @@ class _DataInputFormState extends State<DataInputForm> {
   var keterangan = TextEditingController();
   var kode = TextEditingController();
   var linklogo = TextEditingController();
+  var kondisi = TextEditingController();
+  var lastupdate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +190,40 @@ class _DataInputFormState extends State<DataInputForm> {
               SizedBox(height: 16.0),
               Row(
                 children: [
+                  Icon(Icons.admin_panel_settings, size: 24), // Ikon lokasi
+                  SizedBox(width: 8.0),
+                  Text(
+                    'Kondisi',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              DropdownButton<String>(
+                isExpanded: true,
+                value: selectedkondisi, // TOD
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedkondisi = newValue!;
+                  });
+                },
+                items: <String>[
+                  'Sangat Baik',
+                  'Baik',
+                  'Buruk',
+                  'Sangat Buruk',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                children: [
                   Icon(Icons.description, size: 24), // Ikon keterangan
                   SizedBox(width: 8.0),
                   Text(
@@ -323,17 +361,23 @@ class _DataInputFormState extends State<DataInputForm> {
   }
 
   void _onSubmitWithImage(String imageUrl) async {
+    // Mendapatkan waktu saat ini
+    DateTime now = DateTime.now();
+
+    // Memformat waktu ke dalam string yang sesuai
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     // Membuat objek dataTenant dari input pengguna
     dataTenant _dataTenant = dataTenant(
-      itemNamaPT: namaPT.text,
-      itemGerai: gerai.text,
-      itemLokasi: selectedLocation,
-      itemJenis: selectedBusinessType,
-      itemLuas: luas.text,
-      itemKeterangan: keterangan.text,
-      itemKode: kode.text,
-      itemGambar: imageUrl, // Menggunakan URL gambar
-    );
+        itemNamaPT: namaPT.text,
+        itemGerai: gerai.text,
+        itemLokasi: selectedLocation,
+        itemJenis: selectedBusinessType,
+        itemLuas: luas.text,
+        itemKeterangan: keterangan.text,
+        itemKode: kode.text,
+        itemGambar: imageUrl, // Menggunakan URL gambar
+        itemKondisi: selectedkondisi,
+        itemLastUpdated: formattedDate);
 
     try {
       // Menambahkan data ke Firestore menggunakan metode tambahData

@@ -60,6 +60,8 @@ class _DetailPageState extends State<DetailPage> {
           String lvLuas = snapshot.data!['Luas'];
           String lvKeterangan = snapshot.data!['Keterangan'];
           String lvJenis = snapshot.data!['Jenis'];
+          String lvKondisi = snapshot.data!['Kondisi'];
+          String lvLastUpdated = snapshot.data!['LastUpdated'];
 
           return ListView(
             children: [
@@ -101,6 +103,14 @@ class _DetailPageState extends State<DetailPage> {
               ListTile(
                 title: Text('Luas'),
                 subtitle: Text(lvLuas + " m²"),
+              ),
+              ListTile(
+                title: Text('Kondisi'),
+                subtitle: Text(lvKondisi),
+              ),
+              ListTile(
+                title: Text('Terakhir Diupdate'),
+                subtitle: Text(lvLastUpdated),
               ),
               ListTile(
                 title: Text('Keterangan'),

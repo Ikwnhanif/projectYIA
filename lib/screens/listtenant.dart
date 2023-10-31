@@ -55,7 +55,7 @@ class _TenantListScreenState extends State<TenantListScreen> {
                 DocumentSnapshot dsData = snapshot.data!.docs[index];
                 String lvnamaPT = dsData['NamaPT'];
                 String lvGerai = dsData['Gerai'];
-                String lvLokasi = dsData['Lokasi'];
+                String lvlastupdated = dsData['LastUpdated'];
                 String lvGambar = dsData['Gambar'];
                 String documentId = dsData.id;
 
@@ -79,12 +79,12 @@ class _TenantListScreenState extends State<TenantListScreen> {
                       radius: 30,
                     ),
                     title: Text(
-                      lvnamaPT,
+                      '$lvnamaPT - $lvGerai',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      '$lvGerai - $lvLokasi',
+                      'Terakhir Diubah $lvlastupdated',
                       style: TextStyle(fontSize: 16),
                     ),
                     trailing: IconButton(

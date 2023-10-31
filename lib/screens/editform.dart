@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class EditForm extends StatefulWidget {
   final String documentId;
@@ -19,6 +20,8 @@ class _EditFormState extends State<EditForm> {
   late TextEditingController _jenisController;
   late TextEditingController _luasController;
   late TextEditingController _keteranganController;
+  late TextEditingController _kondisiController;
+  late TextEditingController _lastupdateController;
 
   @override
   void initState() {
@@ -30,6 +33,8 @@ class _EditFormState extends State<EditForm> {
     _jenisController = TextEditingController();
     _luasController = TextEditingController();
     _keteranganController = TextEditingController();
+    _kondisiController = TextEditingController();
+    _lastupdateController = TextEditingController();
 
     // Mengisi nilai awal dari Firestore berdasarkan widget.documentId
     _fetchData();
@@ -51,6 +56,8 @@ class _EditFormState extends State<EditForm> {
         _jenisController.text = data['Jenis'];
         _luasController.text = data['Luas'];
         _keteranganController.text = data['Keterangan'];
+        _kondisiController.text = data['Kondisi'];
+        _lastupdateController.text = data['LastUpdated'];
       });
     }
   }
@@ -64,10 +71,17 @@ class _EditFormState extends State<EditForm> {
     _jenisController.dispose();
     _luasController.dispose();
     _keteranganController.dispose();
+    _kondisiController.dispose();
+    _lastupdateController.dispose();
     super.dispose();
   }
 
   void _updateData() async {
+    // Mendapatkan waktu saat ini
+    DateTime now = DateTime.now();
+
+    // Memformat waktu ke dalam string yang sesuai
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     if (_formKey.currentState!.validate()) {
       final updatedData = {
         'NamaPT': _namaPTController.text,
@@ -77,6 +91,8 @@ class _EditFormState extends State<EditForm> {
         'Jenis': _jenisController.text,
         'Luas': _luasController.text,
         'Keterangan': _keteranganController.text,
+        'Kondisi': _kondisiController.text,
+        'LastUpdated': formattedDate,
       };
 
       await FirebaseFirestore.instance
@@ -94,224 +110,254 @@ class _EditFormState extends State<EditForm> {
       appBar: AppBar(
         title: Text('Edit Tenant Data'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Nama Perusahaan
-              Row(
-                children: [
-                  Icon(Icons.business, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Nama Perusahaan',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Nama Perusahaan
+                Row(
+                  children: [
+                    Icon(Icons.business, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Nama Perusahaan',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _namaPTController,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan nama perusahaan',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan nama perusahaan';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
+                TextFormField(
+                  controller: _namaPTController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan nama perusahaan',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan nama perusahaan';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Nama Gerai
-              Row(
-                children: [
-                  Icon(Icons.shopping_bag, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Nama Gerai (Brand)',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Nama Gerai
+                Row(
+                  children: [
+                    Icon(Icons.shopping_bag, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Nama Gerai (Brand)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _geraiController,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan nama gerai (brand)',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan nama gerai';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
+                TextFormField(
+                  controller: _geraiController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan nama gerai (brand)',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan nama gerai';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Lokasi
-              Row(
-                children: [
-                  Icon(Icons.location_on, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Lokasi',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Lokasi
+                Row(
+                  children: [
+                    Icon(Icons.location_on, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Lokasi',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _lokasiController,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan lokasi',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan lokasi';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
+                TextFormField(
+                  controller: _lokasiController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan lokasi',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan lokasi';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Kode
-              Row(
-                children: [
-                  Icon(Icons.code, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Kode Ruang',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Kode
+                Row(
+                  children: [
+                    Icon(Icons.code, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Kode Ruang',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _kodeController,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan Kode Ruangan',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan kode';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
+                TextFormField(
+                  controller: _kodeController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan Kode Ruangan',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan kode';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Jenis
-              Row(
-                children: [
-                  Icon(Icons.business_center, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Jenis Usaha',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Jenis
+                Row(
+                  children: [
+                    Icon(Icons.business_center, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Jenis Usaha',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _jenisController,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan jenis usaha',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan jenis usaha';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
+                TextFormField(
+                  controller: _jenisController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan jenis usaha',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan jenis usaha';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Luas
-              Row(
-                children: [
-                  Icon(Icons.square_foot, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Luas Bangunan (m)',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Luas
+                Row(
+                  children: [
+                    Icon(Icons.square_foot, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Luas Bangunan (m)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _luasController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan luas bangunan',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan luas';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 14.0),
-
-              // Keterangan
-              Row(
-                children: [
-                  Icon(Icons.description, size: 24),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Keterangan',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                TextFormField(
+                  controller: _luasController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan luas bangunan',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan luas';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
+                // kondisi
+                Row(
+                  children: [
+                    Icon(Icons.admin_panel_settings, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Kondisi Gerai',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                controller: _keteranganController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: 'Masukkan keterangan',
+                  ],
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harap masukkan keterangan';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _kondisiController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan Kondisi Gerai',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan Kondisi Gerai';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 14.0),
 
-              // Tombol Simpan
-              Center(
-                child: ElevatedButton(
-                  onPressed: _updateData,
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
-                  child:
-                      Text('Simpan Perubahan', style: TextStyle(fontSize: 18)),
+                // Keterangan
+                Row(
+                  children: [
+                    Icon(Icons.description, size: 24),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Keterangan',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextFormField(
+                  controller: _keteranganController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan keterangan',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Harap masukkan keterangan';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+
+                // Tombol Simpan
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _updateData,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    ),
+                    child: Text('Simpan Perubahan',
+                        style: TextStyle(fontSize: 18)),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

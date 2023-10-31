@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 60),
               _formSection(Username_controller, 'Username'),
               SizedBox(height: 30),
-              _formSection(Password_controller, 'Password'),
+              _formSectionPass(Password_controller, 'Password'),
               SizedBox(height: 50),
               _buttonSubmit(),
               SizedBox(height: 20),
