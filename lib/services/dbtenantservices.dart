@@ -6,7 +6,7 @@ CollectionReference tbltenant =
 
 class Database {
   static Stream<QuerySnapshot> getData() {
-    return tbltenant.snapshots();
+    return tbltenant.orderBy('LastUpdated', descending: true).snapshots();
   }
 
   static Future<void> tambahData({required dataTenant item}) async {
@@ -37,9 +37,12 @@ class Database {
   }
 
   static Stream<QuerySnapshot> searchData(String query) {
+    String queryUpperCase =
+        query.toUpperCase(); // Mengonversi query ke huruf kecil
     return tbltenant
-        .where('NamaPT', isGreaterThanOrEqualTo: query)
-        .where('NamaPT', isLessThan: query + '\uf8ff')
+        .where('NamaPT', isGreaterThanOrEqualTo: queryUpperCase)
+        .where('NamaPT', isLessThan: queryUpperCase + '\uf8ff')
+        .orderBy('NamaPT', descending: true)
         .snapshots();
   }
 }

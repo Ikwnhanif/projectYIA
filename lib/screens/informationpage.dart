@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tenantyia/data/shared_pref.dart';
 import 'package:tenantyia/screens/loginpage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InformationPage extends StatelessWidget {
   // Metode untuk menampilkan dialog konfirmasi logout
@@ -39,19 +40,86 @@ class InformationPage extends StatelessWidget {
     );
   }
 
+  // Metode untuk menampilkan dialog bantuan
+  Future<void> _showHelpDialog(BuildContext context) async {
+    TextEditingController _helpMessageController = TextEditingController();
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Butuh Bantuan?'),
+          content: Column(
+            children: [
+              Text(
+                'Masukkan pesan bantuan Anda:',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 8),
+              TextField(
+                controller: _helpMessageController,
+                decoration: InputDecoration(
+                  hintText: 'Pesan Bantuan',
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Tutup dialog
+                    },
+                    child: Text('Batal'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Kirim pesan bantuan ke WhatsApp
+                      _sendWhatsAppMessage(_helpMessageController.text);
+                      Navigator.of(context).pop(); // Tutup dialog
+                    },
+                    child: Text('Kirim Pesan Bantuan'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Metode untuk mengirim pesan ke WhatsApp
+  void _sendWhatsAppMessage(String message) async {
+    String phoneNumber =
+        '+6285747950721'; // Ganti dengan nomor WhatsApp yang dituju
+
+    String url =
+        'https://wa.me/$phoneNumber/?text=${Uri.encodeComponent(message)}';
+    await launch(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tentang Aplikasi'),
         actions: [
-          // Tambahkan AlertDialog setelah diklik ikon logout
+          // Tombol Logout
           IconButton(
             onPressed: () {
               // Panggil metode untuk menampilkan dialog konfirmasi logout
               _showLogoutConfirmationDialog(context);
             },
             icon: Icon(Icons.logout),
+          ),
+          // Tombol Bantuan
+          IconButton(
+            onPressed: () {
+              // Panggil metode untuk menampilkan dialog bantuan
+              _showHelpDialog(context);
+            },
+            icon: Icon(Icons.help),
           ),
         ],
       ),

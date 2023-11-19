@@ -23,6 +23,10 @@ class _EditFormState extends State<EditForm> {
   late TextEditingController _kondisiController;
   late TextEditingController _lastupdateController;
 
+  String selectedBusinessType = 'Food And Beverage'; // Default jenis usaha
+  String selectedLocation = 'Check In Area'; // Default lokasi
+  String selectedkondisi = 'Sangat Baik'; // Default kondisi
+
   @override
   void initState() {
     super.initState();
@@ -86,12 +90,12 @@ class _EditFormState extends State<EditForm> {
       final updatedData = {
         'NamaPT': _namaPTController.text,
         'Gerai': _geraiController.text,
-        'Lokasi': _lokasiController.text,
+        'Lokasi': selectedLocation,
         'Kode': _kodeController.text,
-        'Jenis': _jenisController.text,
+        'Jenis': selectedBusinessType,
         'Luas': _luasController.text,
         'Keterangan': _keteranganController.text,
-        'Kondisi': _kondisiController.text,
+        'Kondisi': selectedkondisi,
         'LastUpdated': formattedDate,
       };
 
@@ -188,18 +192,38 @@ class _EditFormState extends State<EditForm> {
                     ),
                   ],
                 ),
-                TextFormField(
-                  controller: _lokasiController,
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan lokasi',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Harap masukkan lokasi';
-                    }
-                    return null;
+                DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedLocation,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedLocation = newValue!;
+                    });
                   },
+                  items: <String>[
+                    'Check In Area',
+                    'Kedatangan',
+                    'Keberangkatan',
+                    'Kawasan Tugu Malioboro',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
+                // TextFormField(
+                //   controller: _lokasiController,
+                //   decoration: InputDecoration(
+                //     hintText: 'Masukkan lokasi',
+                //   ),
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Harap masukkan lokasi';
+                //     }
+                //     return null;
+                //   },
+                // ),
                 SizedBox(height: 14.0),
 
                 // Kode
@@ -244,17 +268,24 @@ class _EditFormState extends State<EditForm> {
                     ),
                   ],
                 ),
-                TextFormField(
-                  controller: _jenisController,
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan jenis usaha',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Harap masukkan jenis usaha';
-                    }
-                    return null;
+                DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedBusinessType,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedBusinessType = newValue!;
+                    });
                   },
+                  items: <String>[
+                    'Food And Beverage',
+                    'Service',
+                    'Retail',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 SizedBox(height: 14.0),
 
@@ -300,17 +331,25 @@ class _EditFormState extends State<EditForm> {
                     ),
                   ],
                 ),
-                TextFormField(
-                  controller: _kondisiController,
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan Kondisi Gerai',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Harap masukkan Kondisi Gerai';
-                    }
-                    return null;
+                DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedkondisi, // TOD
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedkondisi = newValue!;
+                    });
                   },
+                  items: <String>[
+                    'Sangat Baik',
+                    'Baik',
+                    'Buruk',
+                    'Sangat Buruk',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 SizedBox(height: 14.0),
 
