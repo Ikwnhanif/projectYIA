@@ -108,18 +108,18 @@ class InformationPage extends StatelessWidget {
           // Tombol Logout
           IconButton(
             onPressed: () {
-              // Panggil metode untuk menampilkan dialog konfirmasi logout
-              _showLogoutConfirmationDialog(context);
-            },
-            icon: Icon(Icons.logout),
-          ),
-          // Tombol Bantuan
-          IconButton(
-            onPressed: () {
               // Panggil metode untuk menampilkan dialog bantuan
               _showHelpDialog(context);
             },
             icon: Icon(Icons.help),
+          ),
+          // Tombol Bantuan
+          IconButton(
+            onPressed: () {
+              // Panggil metode untuk menampilkan dialog konfirmasi logout
+              _showLogoutConfirmationDialog(context);
+            },
+            icon: Icon(Icons.logout),
           ),
         ],
       ),

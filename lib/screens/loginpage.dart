@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _formSectionPass(dynamic textController, String label) {
     return TextField(
       controller: textController,
-      obscureText: true,
+      obscureText: !_showPassword,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(),

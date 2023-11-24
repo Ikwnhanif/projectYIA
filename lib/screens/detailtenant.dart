@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tenantyia/screens/editform.dart';
-import 'package:tenantyia/screens/inputdata.dart'; // Impor halaman Form Input
+import 'package:tenantyia/screens/inputdata.dart';
+import 'package:tenantyia/screens/petayia.dart'; // Impor halaman Form Input
 
 class DetailPage extends StatefulWidget {
   final String documentId;
@@ -29,6 +30,16 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail Tenant'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Panggil metode untuk menampilkan gambar
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MapsYIA()));
+            },
+            icon: Icon(Icons.map),
+          ),
+        ],
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: _stream,
